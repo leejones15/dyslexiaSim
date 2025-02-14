@@ -13,14 +13,6 @@
             line-height: 1.6;
             background-color: #f9f9f9;
         }
-        #timer {
-            font-size: 20px;
-            color: red;
-            text-align: right;
-            position: fixed;
-            top: 10px;
-            right: 10px;
-        }
         h1 {
             text-align: center;
             font-size: 2em;
@@ -31,53 +23,38 @@
             color: #444;
             margin-bottom: 20px;
         }
-        #questions {
-            margin-top: 20px;
+        .bold {
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <div id="timer">Time: 60s</div>
-
     <h1>The Lost Kitten</h1>
 
     <div id="story">
-        <p class="text">Mia loved animals. She had a dog named Max and a fish named Bubbles. One rainy afternoon, Mia heard a soft "meow" outside her window. She looked out and saw a tiny, wet kitten hiding under a bush.</p>
-        <p class="text">"Oh no! You must be cold and scared," Mia said. She ran outside with an umbrella. Carefully, she picked up the shivering kitten and carried it inside. She wrapped it in a warm towel and gave it a little bowl of milk.</p>
-        <p class="text">Mia’s mom helped her dry the kitten’s fur. "We should see if someone lost their pet," her mom said. They made posters with a picture of the kitten and put them around the neighborhood.</p>
-        <p class="text">A day later, Mia got a call. "That’s my kitten, Whiskers!" a boy named Jake said. He had been looking everywhere. Mia felt a little sad to say goodbye, but she knew the kitten belonged with Jake.</p>
-        <p class="text">When Jake came to get Whiskers, he smiled. "Thank you for taking care of her!" he said. Mia smiled too. She was happy Whiskers was safe.</p>
-        <p class="text">That night, as she cuddled with Max, Mia thought about how good it felt to help someone.</p>
-    </div>
+        <p class="text">Mia loved animals. She had a dog named Max and a fish named Bubbles. <span id="s1" class="bold">One rainy afternoon, Mia heard a soft "meow" outside her window.</span> She looked out and saw a tiny, wet kitten hiding under a bush.</p>
 
-    <div id="questions">
-        <h2>Comprehension Questions</h2>
-        <p>1. What did Mia hear outside?</p><input type="text" id="q1">
-        <p>2. How did Mia take care of the kitten?</p><input type="text" id="q2">
-        <p>3. Why did Mia feel both sad and happy?</p><input type="text" id="q3">
-        <button onclick="submitAnswers()">Submit</button>
+        <p class="text"><span id="s2" class="bold">"Oh no! You must be cold and scared," Mia said.</span> She ran outside with an umbrella. Carefully, she picked up the shivering kitten and carried it inside. She wrapped it in a warm towel and gave it a little bowl of milk.</p>
+
+        <p class="text">Mia’s mom helped her dry the kitten’s fur. "We should see if someone lost their pet," her mom said. <span id="s3" class="bold">They made posters with a picture of the kitten and put them around the neighborhood.</span></p>
     </div>
 
     <script>
-        let timeLeft = 60;
         let studentNumber = localStorage.getItem("studentNumber");
 
-        function countdown() {
-            document.getElementById("timer").innerText = "Time: " + timeLeft + "s";
-            if (timeLeft <= 0) {
-                document.getElementById("story").style.display = "none"; // Hide story after 1 minute
-            } else {
-                timeLeft--;
-                setTimeout(countdown, 1000);
-            }
+        // Apply bold text based on student number
+        if (studentNumber === "1") {
+            document.getElementById("s1").classList.add("bold");
+        } else if (studentNumber === "2") {
+            document.getElementById("s2").classList.add("bold");
+        } else if (studentNumber === "3") {
+            document.getElementById("s3").classList.add("bold");
         }
-        countdown();
 
-        // Scrambling function for Student 1
+        // Scramble text only for Student 3
         function scrambleWord(word) {
             if (word.length < 2) return word; // Leave single-character words unchanged
-
             let letters = word.match(/[a-zA-Z]/g);
             if (!letters) return word;
 
@@ -101,7 +78,7 @@
         }
 
         function scrambleText() {
-            if (studentNumber !== "1") return; // Only scramble if Student 1
+            if (studentNumber !== "3") return; // Only scramble if Student 3
 
             let elements = document.querySelectorAll(".text");
             elements.forEach(element => {
@@ -111,35 +88,5 @@
             });
         }
 
-        if (studentNumber === "1") {
-            setInterval(scrambleText, 1000); // Scrambles text every 1 second for Student 1
-        }
-
-        function submitAnswers() {
-            let data = {
-                studentNumber: studentNumber,
-                name: localStorage.getItem("studentName"),
-                answer1: document.getElementById("q1").value,
-                answer2: document.getElementById("q2").value,
-                answer3: document.getElementById("q3").value
-            };
-
-            fetch("https://script.google.com/macros/s/AKfycbw4BrO6H-mpSwOAMh7Fennmoh-G_5Ras3zztrkJyBpLhq-xUOmxM5SNKG8PjbJJSMYgHA/exec", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert("Answers submitted!");
-                window.location.href = "index.html"; // Redirect to home page after submission
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("There was an error submitting your responses.");
-            });
-        }
-    </script>
-
-</body>
-</html>
+        if (studentNumber === "3") {
+            setTimeout(scrambleText, 500); // Scr
