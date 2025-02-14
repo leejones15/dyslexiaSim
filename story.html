@@ -5,17 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Story</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; }
-        #timer { font-size: 20px; color: red; text-align: right; }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        #timer {
+            font-size: 20px;
+            color: red;
+            text-align: right;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+        }
+        p {
+            font-size: 1.2em;
+            color: #444;
+            margin-bottom: 20px;
+        }
+        #questions {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
     <div id="timer">Time: 60s</div>
+
     <h1>The Lost Kitten</h1>
-    <p id="story">
-        Mia loved animals. She had a dog named Max and a fish named Bubbles...
-    </p>
+
+    <div id="story">
+        <p class="text">Mia loved animals. She had a dog named Max and a fish named Bubbles. One rainy afternoon, Mia heard a soft "meow" outside her window. She looked out and saw a tiny, wet kitten hiding under a bush.</p>
+        <p class="text">"Oh no! You must be cold and scared," Mia said. She ran outside with an umbrella. Carefully, she picked up the shivering kitten and carried it inside. She wrapped it in a warm towel and gave it a little bowl of milk.</p>
+        <p class="text">Mia’s mom helped her dry the kitten’s fur. "We should see if someone lost their pet," her mom said. They made posters with a picture of the kitten and put them around the neighborhood.</p>
+        <p class="text">A day later, Mia got a call. "That’s my kitten, Whiskers!" a boy named Jake said. He had been looking everywhere. Mia felt a little sad to say goodbye, but she knew the kitten belonged with Jake.</p>
+        <p class="text">When Jake came to get Whiskers, he smiled. "Thank you for taking care of her!" he said. Mia smiled too. She was happy Whiskers was safe.</p>
+        <p class="text">That night, as she cuddled with Max, Mia thought about how good it felt to help someone.</p>
+    </div>
 
     <div id="questions">
         <h2>Comprehension Questions</h2>
@@ -32,13 +66,54 @@
         function countdown() {
             document.getElementById("timer").innerText = "Time: " + timeLeft + "s";
             if (timeLeft <= 0) {
-                document.getElementById("story").style.display = "none";
+                document.getElementById("story").style.display = "none"; // Hide story after 1 minute
             } else {
                 timeLeft--;
                 setTimeout(countdown, 1000);
             }
         }
         countdown();
+
+        // Scrambling function for Student 1
+        function scrambleWord(word) {
+            if (word.length < 2) return word; // Leave single-character words unchanged
+
+            let letters = word.match(/[a-zA-Z]/g);
+            if (!letters) return word;
+
+            for (let i = letters.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [letters[i], letters[j]] = [letters[j], letters[i]]; // Swap letters randomly
+            }
+
+            let scrambledWord = "";
+            let letterIndex = 0;
+
+            for (let char of word) {
+                if (/[a-zA-Z]/.test(char)) {
+                    scrambledWord += letters[letterIndex++];
+                } else {
+                    scrambledWord += char; // Keep punctuation unchanged
+                }
+            }
+
+            return scrambledWord;
+        }
+
+        function scrambleText() {
+            if (studentNumber !== "1") return; // Only scramble if Student 1
+
+            let elements = document.querySelectorAll(".text");
+            elements.forEach(element => {
+                let words = element.innerText.split(" ");
+                let scrambledWords = words.map(word => scrambleWord(word));
+                element.innerHTML = scrambledWords.join(" ");
+            });
+        }
+
+        if (studentNumber === "1") {
+            setInterval(scrambleText, 1000); // Scrambles text every 1 second for Student 1
+        }
 
         function submitAnswers() {
             let data = {
@@ -49,8 +124,20 @@
                 answer3: document.getElementById("q3").value
             };
 
-            fetch("https://script.google.com/macros/s/AKfycbzsI8ZT2FSuwbKyUTbw-d0dR2sJ7tqlhne5sOf_b1oGI53m-qAKhmsOGMycwYLc0hkCdA/exec", { method: "POST", body: JSON.stringify(data) });
-            alert("Answers submitted!");
+            fetch("YOUR_GOOGLE_APPS_SCRIPT_URL", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert("Answers submitted!");
+                window.location.href = "index.html"; // Redirect to home page after submission
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("There was an error submitting your responses.");
+            });
         }
     </script>
 
