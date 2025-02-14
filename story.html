@@ -33,28 +33,53 @@
     <h1>The Lost Kitten</h1>
 
     <div id="story">
-        <p class="text">Mia loved animals. She had a dog named Max and a fish named Bubbles. <span id="s1" class="bold">One rainy afternoon, Mia heard a soft "meow" outside her window.</span> She looked out and saw a tiny, wet kitten hiding under a bush.</p>
+        <p id="s1">
+            <span class="bold">Mia loved animals. She had a dog named Max and a fish named Bubbles. One rainy afternoon, Mia heard a soft "meow" outside her window.</span> 
+            She looked out and saw a tiny, wet kitten hiding under a bush.
+        </p>
 
-        <p class="text"><span id="s2" class="bold">"Oh no! You must be cold and scared," Mia said.</span> She ran outside with an umbrella. Carefully, she picked up the shivering kitten and carried it inside. She wrapped it in a warm towel and gave it a little bowl of milk.</p>
+        <p id="s1">
+            <span class="bold">"Oh no! You must be cold and scared," Mia said.</span> 
+            She ran outside with an umbrella. Carefully, she picked up the shivering kitten and carried it inside. She wrapped it in a warm towel and gave it a little bowl of milk.
+        </p>
 
-        <p class="text">Mia’s mom helped her dry the kitten’s fur. "We should see if someone lost their pet," her mom said. <span id="s3" class="bold">They made posters with a picture of the kitten and put them around the neighborhood.</span></p>
+        <p id="s2">
+            <span class="bold">Mia’s mom helped her dry the kitten’s fur. "We should see if someone lost their pet," her mom said.</span> 
+            They made posters with a picture of the kitten and put them around the neighborhood.
+        </p>
+
+        <p id="s2">
+            <span class="bold">A day later, Mia got a call. "That’s my kitten, Whiskers!" a boy named Jake said.</span> 
+            He had been looking everywhere. Mia felt a little sad to say goodbye, but she knew the kitten belonged with Jake.
+        </p>
+
+        <p id="s3">
+            <span class="bold">When Jake came to get Whiskers, he smiled. "Thank you for taking care of her!" he said.</span> 
+            Mia smiled too. She was happy Whiskers was safe.
+        </p>
+
+        <p id="s3">
+            <span class="bold">That night, as she cuddled with Max, Mia thought about how good it felt to help someone.</span>
+        </p>
     </div>
 
     <script>
         let studentNumber = localStorage.getItem("studentNumber");
 
-        // Apply bold text based on student number
-        if (studentNumber === "1") {
-            document.getElementById("s1").classList.add("bold");
-        } else if (studentNumber === "2") {
-            document.getElementById("s2").classList.add("bold");
-        } else if (studentNumber === "3") {
-            document.getElementById("s3").classList.add("bold");
+        function applyBoldText() {
+            // Bold the correct section based on student number
+            if (studentNumber === "1") {
+                document.getElementById("s1").classList.add("bold");
+            } else if (studentNumber === "2") {
+                document.getElementById("s2").classList.add("bold");
+            } else if (studentNumber === "3") {
+                document.getElementById("s3").classList.add("bold");
+            }
         }
 
-        // Scramble text only for Student 3
+        // Scrambling function for Student 3
         function scrambleWord(word) {
-            if (word.length < 2) return word; // Leave single-character words unchanged
+            if (word.length < 2) return word;
             let letters = word.match(/[a-zA-Z]/g);
             if (!letters) return word;
 
@@ -70,7 +95,7 @@
                 if (/[a-zA-Z]/.test(char)) {
                     scrambledWord += letters[letterIndex++];
                 } else {
-                    scrambledWord += char; // Keep punctuation unchanged
+                    scrambledWord += char;
                 }
             }
 
@@ -78,9 +103,9 @@
         }
 
         function scrambleText() {
-            if (studentNumber !== "3") return; // Only scramble if Student 3
+            if (studentNumber !== "3") return; // Only scramble for Student 3
 
-            let elements = document.querySelectorAll(".text");
+            let elements = document.querySelectorAll("#s3");
             elements.forEach(element => {
                 let words = element.innerText.split(" ");
                 let scrambledWords = words.map(word => scrambleWord(word));
@@ -88,5 +113,12 @@
             });
         }
 
+        // Apply bold formatting and scramble text (if Student 3)
+        applyBoldText();
         if (studentNumber === "3") {
-            setTimeout(scrambleText, 500); // Scr
+            setTimeout(scrambleText, 500);
+        }
+    </script>
+
+</body>
+</html>
