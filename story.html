@@ -34,28 +34,16 @@
 
     <div id="story">
         <!-- Section for Student 1 -->
-        <p id="s1">
-            <span>Mia loved animals. She had a dog named Max and a fish named Bubbles. One rainy afternoon, Mia heard a soft "meow" outside her window. She looked out and saw a tiny, wet kitten hiding under a bush.</span>
-        </p>
-        <p id="s1">
-            <span>"Oh no! You must be cold and scared," Mia said. She ran outside with an umbrella. Carefully, she picked up the shivering kitten and carried it inside. She wrapped it in a warm towel and gave it a little bowl of milk.</span>
-        </p>
+        <p id="s1"><span class="bold">Mia loved animals. She had a dog named Max and a fish named Bubbles. One rainy afternoon, Mia heard a soft "meow" outside her window. She looked out and saw a tiny, wet kitten hiding under a bush.</span></p>
+        <p id="s1"><span class="bold">"Oh no! You must be cold and scared," Mia said. She ran outside with an umbrella. Carefully, she picked up the shivering kitten and carried it inside. She wrapped it in a warm towel and gave it a little bowl of milk.</span></p>
 
         <!-- Section for Student 2 -->
-        <p id="s2">
-            <span>Mia’s mom helped her dry the kitten’s fur. "We should see if someone lost their pet," her mom said. They made posters with a picture of the kitten and put them around the neighborhood.</span>
-        </p>
-        <p id="s2">
-            <span>A day later, Mia got a call. "That’s my kitten, Whiskers!" a boy named Jake said. He had been looking everywhere. Mia felt a little sad to say goodbye, but she knew the kitten belonged with Jake.</span>
-        </p>
+        <p id="s2"><span class="bold">Mia’s mom helped her dry the kitten’s fur. "We should see if someone lost their pet," her mom said. They made posters with a picture of the kitten and put them around the neighborhood.</span></p>
+        <p id="s2"><span class="bold">A day later, Mia got a call. "That’s my kitten, Whiskers!" a boy named Jake said. He had been looking everywhere. Mia felt a little sad to say goodbye, but she knew the kitten belonged with Jake.</span></p>
 
         <!-- Section for Student 3 -->
-        <p id="s3">
-            <span>When Jake came to get Whiskers, he smiled. "Thank you for taking care of her!" he said. Mia smiled too. She was happy Whiskers was safe.</span>
-        </p>
-        <p id="s3">
-            <span>That night, as she cuddled with Max, Mia thought about how good it felt to help someone.</span>
-        </p>
+        <p id="s3"><span class="bold">When Jake came to get Whiskers, he smiled. "Thank you for taking care of her!" he said. Mia smiled too. She was happy Whiskers was safe.</span></p>
+        <p id="s3"><span class="bold">That night, as she cuddled with Max, Mia thought about how good it felt to help someone.</span></p>
     </div>
 
     <script>
@@ -72,7 +60,7 @@
             }
         }
 
-        // Scrambling function for Student 3
+        // Scrambling function for Student 3 (while preserving bold spans)
         function scrambleWord(word) {
             if (word.length < 2) return word;
             let letters = word.match(/[a-zA-Z]/g);
@@ -100,18 +88,18 @@
         function scrambleText() {
             if (studentNumber !== "3") return; // Only scramble for Student 3
 
-            let elements = document.querySelectorAll("#story p");
+            let elements = document.querySelectorAll("#s3 span"); // Preserve bolding
             elements.forEach(element => {
                 let words = element.innerText.split(" ");
                 let scrambledWords = words.map(word => scrambleWord(word));
-                element.innerHTML = scrambledWords.join(" ");
+                element.innerHTML = scrambledWords.join(" "); // Keep bold while scrambling
             });
         }
 
-        // Apply bold formatting and scramble text (if Student 3)
+        // Apply bold formatting and continuously scramble text for Student 3
         applyBoldText();
         if (studentNumber === "3") {
-            setInterval(scrambleText, 1000); // Continuously shuffle text every second
+            setInterval(scrambleText, 1000); // Scramble every second while keeping bold
         }
     </script>
 
