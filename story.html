@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; }
+        #timer { font-size: 20px; color: red; text-align: right; }
+    </style>
+</head>
+<body>
+
+    <div id="timer">Time: 60s</div>
+    <h1>The Lost Kitten</h1>
+    <p id="story">
+        Mia loved animals. She had a dog named Max and a fish named Bubbles...
+    </p>
+
+    <div id="questions">
+        <h2>Comprehension Questions</h2>
+        <p>1. What did Mia hear outside?</p><input type="text" id="q1">
+        <p>2. How did Mia take care of the kitten?</p><input type="text" id="q2">
+        <p>3. Why did Mia feel both sad and happy?</p><input type="text" id="q3">
+        <button onclick="submitAnswers()">Submit</button>
+    </div>
+
+    <script>
+        let timeLeft = 60;
+        let studentNumber = localStorage.getItem("studentNumber");
+
+        function countdown() {
+            document.getElementById("timer").innerText = "Time: " + timeLeft + "s";
+            if (timeLeft <= 0) {
+                document.getElementById("story").style.display = "none";
+            } else {
+                timeLeft--;
+                setTimeout(countdown, 1000);
+            }
+        }
+        countdown();
+
+        function submitAnswers() {
+            let data = {
+                studentNumber: studentNumber,
+                name: localStorage.getItem("studentName"),
+                answer1: document.getElementById("q1").value,
+                answer2: document.getElementById("q2").value,
+                answer3: document.getElementById("q3").value
+            };
+
+            fetch("https://script.google.com/macros/s/AKfycbzsI8ZT2FSuwbKyUTbw-d0dR2sJ7tqlhne5sOf_b1oGI53m-qAKhmsOGMycwYLc0hkCdA/exec", { method: "POST", body: JSON.stringify(data) });
+            alert("Answers submitted!");
+        }
+    </script>
+
+</body>
+</html>

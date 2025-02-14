@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Your Name</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        input { font-size: 16px; padding: 10px; }
+        button { margin-top: 10px; padding: 10px 20px; font-size: 16px; }
+    </style>
+</head>
+<body>
+
+    <h1>Enter Your Name</h1>
+    <input type="text" id="nameInput" placeholder="Your Name">
+    <button onclick="saveName()">Next</button>
+
+    <script>
+        function saveName() {
+            let name = document.getElementById("nameInput").value;
+            if (name) {
+                localStorage.setItem("studentName", name);
+                window.location.href = "directions.html";
+            } else {
+                alert("Please enter your name.");
+            }
+        }
+    </script>
+
+</body>
+</html>
